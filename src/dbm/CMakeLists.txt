@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0 )
+cmake_minimum_required( VERSION 4.0.3 )
 cmake_policy( SET CMP0015 NEW )
 project( dbm )
 
@@ -14,9 +14,7 @@ target_include_directories( dbm
                                 "${CMAKE_CURRENT_SOURCE_DIR}/../" )
 
 target_link_libraries( dbm PRIVATE mysqlConnector common xivdat )
-if (UNIX)
-    target_link_libraries( dbm PRIVATE stdc++fs )
-else()
+if (NOT UNIX)
     target_link_libraries( dbm PRIVATE mysql )
 endif()
 

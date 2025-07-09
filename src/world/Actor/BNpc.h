@@ -161,6 +161,8 @@ namespace Sapphire::Entity
 
     void setRoamTargetPos( const Common::FFXIVARR_POSITION3& targetPos );
 
+    void updateGambitTimeline(World::AI::GambitTimeLinePackPtr newTimeline);
+
     const Common::FFXIVARR_POSITION3& getRoamTargetPos() const;
     const Common::FFXIVARR_POSITION3& getSpawnPos() const;
 

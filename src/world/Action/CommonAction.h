@@ -25,6 +25,13 @@ namespace Sapphire::World::Action
     WrathIV = 96,
     Infuriated = 97,
     InnerBeast = 411,
-    Deliverance = 729
+    Deliverance = 729,
+    Aetherflow = 304
+  };
+
+  enum ActionAbility
+  {
+      Bane = 174,
+      EnergyDrain = 167
   };
 }

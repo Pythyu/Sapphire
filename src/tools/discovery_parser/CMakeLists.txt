@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0.3)
 cmake_policy(SET CMP0015 NEW)
 project(Tool_discovery_parser)
 
@@ -24,7 +24,7 @@ add_executable(discovery_parser ${SERVER_PUBLIC_INCLUDE_FILES} ${SERVER_SOURCE_F
 #)
 
 if (UNIX)
-    target_link_libraries (discovery_parser common xivdat pthread mysql dl z stdc++fs)
+    target_link_libraries (discovery_parser common xivdat pthread mysql dl z )
 else()
     target_link_libraries (discovery_parser common xivdat mysql zlib)
 endif()

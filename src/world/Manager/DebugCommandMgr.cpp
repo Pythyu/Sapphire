@@ -603,6 +603,37 @@ void DebugCommandMgr::get( char* data, Entity::Player& player, std::shared_ptr< 
                                  player.getPos().x, player.getPos().y, player.getPos().z,
                                  player.getRot(), map_id, player.getTerritoryTypeId() );
   }
+  else if ( (subCommand == "bnpc") )
+  {
+      auto nameIdList = exdData.getIdList< Excel::BNpcName >();
+      for( auto id: nameIdList)
+      {
+           auto BNpcName = exdData.getRow< Excel::BNpcName >( id );
+           if( BNpcName && BNpcName->getString(BNpcName->data().Text.SGL) == params)
+           {
+             auto& db = Common::Service< Db::DbWorkerPool< Db::ZoneDbConnection > >::ref();
+             auto stmt = db.getPreparedStatement( Db::ZoneDbStatements::ZONE_SEL_BNPCS_BY_TERI );
+             stmt->setUInt( 1, player.getTerritoryTypeId() );
+             auto res = db.query( stmt );
+             uint32_t layoutId = 0;
+             PlayerMgr::sendServerNotice( player, "Search result for {0}:", params);
+             while( res->next() )
+             {
+               auto bnpc = std::make_shared< Common::BNPCInstanceObject >();
+               if( res->getInt( 16 ) != id)
+                 continue;
+               
+               layoutId = res->getInt( 4 );
+               PlayerMgr::sendServerNotice( player, "  - layoutId: {0}", layoutId);
+             }
+             return;
+           }
+      }
+
+      PlayerMgr::sendServerNotice(player, "Error : BNPC {0} not found !", params);
+      return;
+      
+  }
   else
   {
     PlayerMgr::sendUrgent( player, "{0} is not a valid GET command.", subCommand );

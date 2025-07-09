@@ -768,6 +768,7 @@ namespace Sapphire::Entity
     using BlacklistIDVec = std::array< uint64_t, 200 >;
 
     Common::HuntingLogEntry& getHuntingLogEntry( uint8_t index );
+    bool validHuntingLogEntry( uint8_t index );
 
     uint64_t getPartyId() const;
     void setPartyId( uint64_t partyId );

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0.3)
 cmake_policy(SET CMP0015 NEW)
 project(Tool_nav_export)
 
@@ -11,7 +11,7 @@ file(GLOB SERVER_SOURCE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 add_executable( nav_export ${SERVER_PUBLIC_INCLUDE_FILES} ${SERVER_SOURCE_FILES})
 
 if (UNIX)
-    target_link_libraries( nav_export common xivdat pthread mysql dl z stdc++fs Recast Detour DetourTileCache )
+    target_link_libraries( nav_export common xivdat pthread mysql dl z  Recast Detour DetourTileCache )
 else()
     target_link_libraries( nav_export common xivdat mysql zlib Recast Detour DetourTileCache )
 endif()

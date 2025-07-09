@@ -958,6 +958,12 @@ void Action::Action::addDefaultActorFilters()
       addActorFilter( filter );
       break;
     }
+    case Common::CastType::ConeAOE:
+    {
+      auto filter = std::make_shared< World::Util::ActorFilterInConeRange >( m_pos, m_effectRange, m_pSource->getRot(), m_effectWidth );
+      addActorFilter( filter );
+      break;
+    }
 
 //    case Common::CastType::RectangularAOE:
 //    {

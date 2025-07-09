@@ -6,6 +6,18 @@
 #include <Actor/Player.h>
 #include <Actor/BNpc.h>
 
+#include "Action/Action.h"
+#include <AI/GambitRule.h>
+#include <AI/GambitPack.h>
+#include <AI/GambitTargetCondition.h>
+#include <AI/Fsm/StateMachine.h>
+#include <AI/Fsm/Condition.h>
+#include <AI/Fsm/StateIdle.h>
+#include <AI/Fsm/StateRoam.h>
+#include <AI/Fsm/StateCombat.h>
+#include <AI/Fsm/StateRetreat.h>
+#include <AI/Fsm/StateDead.h>
+
 #include <WorldServer.h>
 
 #include <Network/GamePacket.h>
@@ -49,6 +61,8 @@ private:
   Entity::BNpcPtr madison2;
   Entity::BNpcPtr madison;
   Entity::BNpcPtr chopper;
+
+  std::vector<Entity::BNpcPtr> trashList;
 
 public:
   Sastasha() :
@@ -122,7 +136,134 @@ public:
     instance.addEObj( "Unnaturalripples_2", 2000407, 3992449, 3741895, 4, { -338.036499f, 6.500000f, 300.206512f }, 0.991789f, 0.000048f, 0 );
     instance.addEObj( "Unnaturalripples_3", 2000408, 3992453, 3741897, 4, { -337.929596f, 6.500000f, 335.975311f }, 1.000000f, 0.000000f, 0 );
 
+   // Trash mobs
+
+  trashList.push_back(instance.createBNpcFromLayoutId( 3281765, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3282344, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3425506, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3425507, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3425508, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3425509, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3425510, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637470, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637472, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637473, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637474, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637475, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637476, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsBlackBat(3725388, instance));
+  trashList.push_back(SpawnBNpcAsBlackBat(3725390, instance));
+  trashList.push_back(SpawnBNpcAsBlackBat(3725392, instance));
+  trashList.push_back(SpawnBNpcAsBlackBat(3725423, instance));
+  trashList.push_back(SpawnBNpcAsBlackBat(3725425, instance));
+  trashList.push_back(SpawnBNpcAsBlackBat(3726787, instance));
+
+  trashList.push_back(SpawnBNpcAsCaveAurelia(3725818, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(3725820, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(3725822, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(3796117, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(3796129, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(4217967, instance));
+  trashList.push_back(SpawnBNpcAsCaveAurelia(4217968, instance));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3725935, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3726787, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3796115, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3796116, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3796131, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3796133, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978761, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978770, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978776, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978779, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978783, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978784, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978786, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978788, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978789, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978790, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978791, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978792, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978793, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978794, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978795, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978797, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981843, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981860, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981862, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981864, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981865, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981872, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981878, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981883, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981884, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981886, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981887, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981888, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3981889, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3982023, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3982024, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3988322, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3988323, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3988324, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 3988325, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056165, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056166, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056170, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056171, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056179, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056186, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4056188, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4064937, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4064938, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4087814, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4087815, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4106354, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4106627, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4106638, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4106641, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4125433, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4125434, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4138739, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4142091, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4142092, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4142094, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4142095, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4142096, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191890, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191892, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191893, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191894, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191895, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191896, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4191897, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4192074, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4192083, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4334189, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4334190, 1, Common::BNpcType::Enemy));
   }
+
+  Entity::BNpcPtr SpawnBNpcAsBlackBat(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 3 );
+    npc->updateGambitTimeline(newGambitPack);
+    return npc;
+  }
+
+  Entity::BNpcPtr SpawnBNpcAsCaveAurelia(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 3 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 5 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 7 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 588, 0 ), 9 );
+    npc->updateGambitTimeline(newGambitPack);
+    return npc;
+  }
+
 
   void onUpdate( InstanceContent& instance, uint64_t tickCount ) override
   {

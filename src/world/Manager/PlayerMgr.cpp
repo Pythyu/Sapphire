@@ -475,6 +475,8 @@ void PlayerMgr::onUpdateHuntingLog( Entity::Player& player, uint8_t id )
     return;
 
   auto currentClassId = classJobInfo->data().MainClass;
+  if (!player.validHuntingLogEntry(currentClassId - 1))
+      return;
 
   auto& logEntry = player.getHuntingLogEntry( currentClassId - 1 );
 

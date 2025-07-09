@@ -178,6 +178,9 @@ namespace Sapphire
 
     Entity::BNpcPtr createBNpcFromLayoutId( uint32_t levelId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0 );
 
+
+    Entity::BNpcPtr createBNpcFromLayoutIdDebug(Entity::Player& player, uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0);
+
     Entity::BNpcPtr getActiveBNpcByEntityId( uint32_t entityId );
 
     Entity::BNpcPtr getActiveBNpcByLayoutId( uint32_t instanceId );

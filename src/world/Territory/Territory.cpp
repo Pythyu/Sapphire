@@ -16,6 +16,7 @@
 #include <Network/PacketWrappers/ActorControlSelfPacket.h>
 #include <Service.h>
 
+#include "Manager/PlayerMgr.h"
 #include "Territory.h"
 #include "InstanceContent.h"
 #include "QuestBattle.h"
@@ -838,6 +839,32 @@ Entity::BNpcPtr Territory::createBNpcFromLayoutId( uint32_t layoutId, uint32_t h
   auto pBNpc = std::make_shared< Entity::BNpc >( getNextActorId(), infoPtr->second, *this, hp, bnpcType );
   pBNpc->init();
   pBNpc->setTriggerOwnerId( triggerOwnerId );
+  pushActor( pBNpc );
+  return pBNpc;
+}
+
+Entity::BNpcPtr Territory::createBNpcFromLayoutIdDebug(Entity::Player& player, uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId )
+{
+  auto infoPtr = m_bNpcBaseMap.find( layoutId );
+  if( infoPtr == m_bNpcBaseMap.end() )
+  {
+    PlayerMgr::sendDebug( player, "layoutID {0} not found", layoutId);
+    for( auto& npcKey : m_bNpcBaseMap) {
+        printf("- %u : %s\n", npcKey.first, npcKey.second->bnpcName.c_str());
+    }
+    return nullptr;
+  }
+
+  PlayerMgr::sendDebug( player, "Found infoPtr" );
+  auto pBNpc = std::make_shared< Entity::BNpc >( getNextActorId(), infoPtr->second, *this, hp, bnpcType );
+  if (pBNpc == nullptr)
+  {
+      PlayerMgr::sendDebug( player, "pBNpc is nullptr" );
+      return nullptr;
+  }
+  pBNpc->init();
+  pBNpc->setTriggerOwnerId( triggerOwnerId );
+  PlayerMgr::sendDebug( player, "pBNpc setup" );
   pushActor( pBNpc );
   return pBNpc;
 }

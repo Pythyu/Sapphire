@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 #include "CommonGen.h"
 #include "Vector3.h"

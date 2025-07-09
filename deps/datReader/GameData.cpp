@@ -12,6 +12,21 @@
 #include "DatCat.h"
 #include "File.h"
 
+/*
+namespace std {
+
+    template<typename To, typename From>
+    std::shared_ptr<To> reinterpret_pointer_cast(std::shared_ptr<From> const & ptr)
+    {
+        return std::shared_ptr<To>(
+            ptr,
+            reinterpret_cast<To*>(ptr.get())
+        );
+    }
+
+}*/
+
+
 namespace {
 // Relation between category number and category name
 // These names are taken straight from the exe, it helps resolve dispatching when getting files by path

@@ -20,6 +20,19 @@ namespace Sapphire::World::Util
   using ActorFilterPtr = std::shared_ptr< ActorFilter >;
 
   /////////////////////////////////////////////////////////////////////////////
+
+  class ActorFilterInConeRange : public ActorFilter
+  {
+    Common::FFXIVARR_POSITION3 m_startPos;
+    float m_range;
+    float m_rotation;
+    float m_coneEdgeAngle;
+  public:
+    ActorFilterInConeRange( Common::FFXIVARR_POSITION3 startPos, float range, float rotation, float coneEdgeAngle);
+    bool conditionApplies( const Entity::GameObject& actor ) override;
+  };
+
+  /////////////////////////////////////////////////////////////////////////////
  
   class ActorFilterInRange : public ActorFilter
   {

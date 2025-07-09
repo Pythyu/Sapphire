@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0.3)
 cmake_policy(SET CMP0015 NEW)
 project(Tool_bnpc_parserps3)
 
@@ -24,7 +24,7 @@ add_executable(bnpc_parserps3 ${SERVER_PUBLIC_INCLUDE_FILES} ${SERVER_SOURCE_FIL
 #)
 
 if (UNIX)
-    target_link_libraries (bnpc_parserps3 common xivdatps3 pthread mysql dl z stdc++fs)
+    target_link_libraries (bnpc_parserps3 common xivdatps3 pthread mysql dl z )
 else()
     target_link_libraries (bnpc_parserps3 common xivdatps3 mysql zlib)
 endif()

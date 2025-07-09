@@ -1453,6 +1453,11 @@ Sapphire::Common::HuntingLogEntry& Player::getHuntingLogEntry( uint8_t index )
   return m_huntingLogEntries[ index ];
 }
 
+bool Player::validHuntingLogEntry( uint8_t index )
+{
+  return index < m_huntingLogEntries.size();
+}
+
 void Player::setActiveLand( uint8_t land, uint8_t ward )
 {
   m_activeLand.plot = land;

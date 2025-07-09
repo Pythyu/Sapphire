@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0.2 )
+cmake_minimum_required( VERSION 4.0.3 )
 project( Sapphire )
 
 file(GLOB UTILS_SOURCE_FILES
@@ -25,7 +25,7 @@ if( UNIX )
   target_link_libraries( common 
                            PUBLIC
                              pthread
-                             stdc++fs )
+                              )
 endif()
 
 target_include_directories( common

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 4.0.3)
 cmake_policy(SET CMP0015 NEW)
 project(Tool_event_object_parser)
 
@@ -10,7 +10,7 @@ add_executable(event_object_parser ${SERVER_PUBLIC_INCLUDE_FILES} ${SERVER_SOURC
 
 
 if (UNIX)
-    target_link_libraries (event_object_parser common xivdat pthread mysql dl z stdc++fs)
+    target_link_libraries (event_object_parser common xivdat pthread mysql dl z )
 else()
     target_link_libraries (event_object_parser common xivdat mysql zlib)
 endif()

@@ -7,9 +7,15 @@
 #include <vector>
 #include <stdint.h>
 #include <mutex>
+#include <iostream>
 
 #include <filesystem>
-
+/*
+namespace std {
+template<typename To, typename From>
+std::shared_ptr<To> reinterpret_pointer_cast(std::shared_ptr<From> const & ptr);
+}
+*/
 namespace xivps3::dat
 {
 

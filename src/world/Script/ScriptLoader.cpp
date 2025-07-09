@@ -33,8 +33,6 @@ const std::string Sapphire::Scripting::ScriptLoader::getModuleExtension()
 {
 #ifdef _WIN32
   return ".dll";
-#elif __APPLE__
-  return ".dylib";
 #else
   return ".so";
 #endif

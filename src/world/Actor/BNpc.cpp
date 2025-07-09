@@ -856,12 +856,12 @@ void BNpc::calculateStats()
 
   float base = Math::CalcStats::calculateBaseStat( *this );
 
-  auto str = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().STR ) / 100 ) );
-  auto dex = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().DEX ) / 100 ) );
-  auto vit = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().VIT ) / 100 ) );
-  auto inte = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().INT_ ) / 100 ) );
-  auto mnd = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().MND ) / 100 ) );
-  auto pie = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().PIE ) / 100 ) );
+  auto str = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().STR ) / 10 ) );
+  auto dex = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().DEX ) / 10 ) );
+  auto vit = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().VIT ) / 10 ) );
+  auto inte = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().INT_ ) / 10 ) );
+  auto mnd = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().MND ) / 10 ) );
+  auto pie = static_cast< uint32_t >( base * ( static_cast< float >( classInfo->data().PIE ) / 10 ) );
 
   setStatValue( BaseParam::Strength, str );
   setStatValue( BaseParam::Dexterity, dex );
@@ -960,6 +960,11 @@ void BNpc::init()
     stateRetreat->addTransition( stateIdle, make_RoamTargetReachedCondition() );
   }
   m_fsm->setCurrentState( stateIdle );
+}
+
+void BNpc::updateGambitTimeline(World::AI::GambitTimeLinePackPtr newTimeline)
+{
+  m_pGambitPack = newTimeline;
 }
 
 void BNpc::processGambits( uint64_t tickCount )
