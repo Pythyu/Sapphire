@@ -2572,7 +2572,12 @@
     "restorePercentage": 20,
     "nextCombo": [],
     "statuses": {
-      "caster": [],
+      "caster": [
+        {
+          "id": 304,
+          "duration": 10000000,
+          "modifiers": []
+        }],
       "target": []
     }
   },
@@ -2664,7 +2669,21 @@
     "nextCombo": [],
     "statuses": {
       "caster": [],
-      "target": []
+      "target": [{
+        "id": 182,
+        "duration": 10000,
+        "modifiers": [
+          {
+            "modifier": "StrengthPercent",
+            "value": -15
+          },
+          {
+            "modifier": "DexterityPercent",
+            "value": -15
+          }
+        ]
+      }
+      ]
     }
   },
   "171": {
@@ -2769,7 +2788,38 @@
     "nextCombo": [],
     "statuses": {
       "caster": [],
-      "target": []
+      "target": [
+        {
+          "id": 188,
+          "duration": 15000,
+          "modifiers": [
+            {
+              "modifier": "TickDamage",
+              "value": 10
+            }
+          ]
+        },
+        {
+          "id": 191,
+          "duration": 15000,
+          "modifiers": [
+            {
+              "modifier": "HealingRecoveryPercent",
+              "value": -20
+            }
+          ]
+        },
+        {
+          "id": 240,
+          "duration": 20000,
+          "modifiers": [
+            {
+              "modifier": "HeavyPercent",
+              "value": 40
+            }
+          ]
+        }
+    ]
     }
   },
   "178": {
@@ -2784,7 +2834,17 @@
     "nextCombo": [],
     "statuses": {
       "caster": [],
-      "target": []
+      "target": [{
+        "id": 189,
+        "duration": 30000,
+        "modifiers": [
+          {
+            "modifier": "TickDamage",
+            "value": 35
+          }
+        ]
+      }
+      ]
     }
   },
   "179": {
@@ -6464,7 +6524,7 @@
   },
   "541": {
     "name": "Gnaw",
-    "potency": 0,
+    "potency": 220,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -6518,7 +6578,16 @@
     "restorePercentage": 0,
     "nextCombo": [],
     "statuses": {
-      "caster": [],
+      "caster": [{
+        "id": 188,
+        "duration": 15000,
+        "modifiers": [
+          {
+            "modifier": "PhysicalDamagePercent",
+            "value": 10
+          }
+        ]
+      }],
       "target": []
     }
   },
@@ -7124,7 +7193,7 @@
   },
   "588": {
     "name": "Numbing Tendrils",
-    "potency": 0,
+    "potency": 360,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -7134,7 +7203,11 @@
     "nextCombo": [],
     "statuses": {
       "caster": [],
-      "target": []
+      "target": [{
+        "id": 17,
+        "duration": 30000,
+        "modifiers": []
+      }]
     }
   },
   "589": {
@@ -10529,7 +10602,7 @@
   },
   "870": {
     "name": "attack",
-    "potency": 0,
+    "potency": 110,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -10559,7 +10632,7 @@
   },
   "872": {
     "name": "attack",
-    "potency": 0,
+    "potency": 110,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -11084,7 +11157,7 @@
   },
   "907": {
     "name": "Small Claw",
-    "potency": 0,
+    "potency": 220,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -11909,7 +11982,7 @@
   },
   "966": {
     "name": "Fire",
-    "potency": 0,
+    "potency": 80,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,
@@ -11924,7 +11997,7 @@
   },
   "967": {
     "name": "Blizzard",
-    "potency": 0,
+    "potency": 80,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,

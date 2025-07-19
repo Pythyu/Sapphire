@@ -81,6 +81,7 @@ BNpc::BNpc( uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, co
   m_weaponMain = 0;
   m_weaponSub = 0;
   m_pose = 0;
+  m_superAgro = false;
 
   m_bNpcNameId = pInfo->NameId;
   m_bNpcBaseId = pInfo->BaseId;
@@ -196,6 +197,7 @@ BNpc::BNpc( uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, co
   m_weaponMain = 0;
   m_weaponSub = 0;
   m_pose = 0;
+  m_superAgro = false;
 
   m_bNpcNameId = pInfo->NameId;
   m_bNpcBaseId = pInfo->BaseId;
@@ -572,6 +574,11 @@ void BNpc::hateListRemove( const CharaPtr& pChara )
       {
         PlayerPtr tmpPlayer = pChara->getAsPlayer();
         tmpPlayer->onMobDeaggro( *this );
+        // Temporary
+        if(tmpPlayer->m_playerPetNpc != nullptr)
+        {
+          tmpPlayer->m_playerPetNpc->deaggro(getAsChara());
+        }
       }
       return;
     }
@@ -613,10 +620,17 @@ void BNpc::aggro( const Sapphire::Entity::CharaPtr& pChara )
 
   changeTarget( pChara->getId() );
 
+  this->hateListAdd(pChara, 1);
+
   if( pChara->isPlayer() )
   {
     PlayerPtr tmpPlayer = pChara->getAsPlayer();
     tmpPlayer->onMobAggro( *getAsBNpc() );
+    // Temporary
+    if(tmpPlayer->m_playerPetNpc != nullptr)
+    {
+      tmpPlayer->m_playerPetNpc->aggro(getAsChara());
+    }
   }
 
 }
@@ -632,6 +646,12 @@ void BNpc::deaggro( const CharaPtr& pChara )
     Network::Util::Packet::sendActorControl( getInRangePlayerIds(), getId(), ToggleWeapon, 0, 1, 1 );
     Network::Util::Packet::sendActorControl( getInRangePlayerIds(), getId(), SetBattle );
     tmpPlayer->onMobDeaggro( *this );
+
+    // Temporary
+    if(tmpPlayer->m_playerPetNpc != nullptr)
+    {
+      tmpPlayer->m_playerPetNpc->deaggro(getAsChara());
+    }
 
     if( getTriggerOwnerId() == pChara->getId() )
     {
@@ -654,6 +674,7 @@ void BNpc::onTick()
 void BNpc::update( uint64_t tickCount )
 {
   Chara::update( tickCount );
+  checkAggro();
   m_fsm->update( *this, tickCount );
 }
 
@@ -727,7 +748,7 @@ void BNpc::setTimeOfDeath( uint32_t timeOfDeath )
 void BNpc::checkAggro()
 {
   // passive mobs should ignore players unless aggro'd
-  if( m_aggressionMode == 1 )
+  if( m_aggressionMode == 1 || !this->m_hateList.empty())
     return;
 
   CharaPtr pClosestChara = getClosestChara();
@@ -741,6 +762,8 @@ void BNpc::checkAggro()
     if( pClosestChara->getLevel() > m_level )
     {
       auto levelDiff = std::abs( pClosestChara->getLevel() - this->getLevel() );
+      if (m_superAgro)
+        levelDiff = -50;
 
       if( levelDiff >= 10 )
         range = 0.f;
@@ -772,6 +795,8 @@ void BNpc::checkAggro()
     if( pClosestChara->getLevel() > m_level )
     {
       auto levelDiff = std::abs( pClosestChara->getLevel() - this->getLevel() );
+      if (m_superAgro)
+        levelDiff = -50;
 
       if( levelDiff >= 10 )
         range = 0.f;
@@ -925,13 +950,13 @@ void BNpc::init()
 */
 
   auto gambitPack = AI::make_GambitTimeLinePack( -1 );
-  gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 88, 0 ), 2 );
+  /*gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 88, 0 ), 2 );
   gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 89, 0 ), 4 );
   gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 90, 0 ), 6 );
   gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 91, 0 ), 8 );
   gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 92, 0 ), 10 );
   gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 81, 0 ), 12 );
-  gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 82, 0 ), 14 );
+  gambitPack->addTimeLine( AI::make_TopHateTargetCondition(), Action::make_Action( getAsChara(), 82, 0 ), 14 );*/
   m_pGambitPack = gambitPack;
 
   using namespace AI::Fsm;
@@ -1011,4 +1036,9 @@ const Common::FFXIVARR_POSITION3& BNpc::getRoamTargetPos() const
 const Common::FFXIVARR_POSITION3& BNpc::getSpawnPos() const
 {
   return m_spawnPos;
+}
+
+void BNpc::setMSuperAgro( bool mSuperAgro )
+{
+  m_superAgro = mSuperAgro;
 }

@@ -262,6 +262,7 @@ void Territory::pushActor( const Entity::GameObjectPtr& pActor )
 
     if( m_pNaviProvider )
       agentId = m_pNaviProvider->addAgent( *pBNpc );
+
     pBNpc->setAgentId( agentId );
 
     m_bNpcMap[ pBNpc->getId() ] = pBNpc;
@@ -830,43 +831,59 @@ uint32_t Territory::getNextActionResultId()
   return m_effectCounter++;
 }
 
-Entity::BNpcPtr Territory::createBNpcFromLayoutId( uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId )
+Entity::BNpcPtr Territory::createBNpcFromLayoutId( uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId, uint32_t npcFlag)
 {
   auto infoPtr = m_bNpcBaseMap.find( layoutId );
   if( infoPtr == m_bNpcBaseMap.end() )
     return nullptr;
 
   auto pBNpc = std::make_shared< Entity::BNpc >( getNextActorId(), infoPtr->second, *this, hp, bnpcType );
+  if (npcFlag)
+    pBNpc->setFlag(npcFlag);
   pBNpc->init();
   pBNpc->setTriggerOwnerId( triggerOwnerId );
   pushActor( pBNpc );
+  this->updateActorPosition(*pBNpc);
   return pBNpc;
 }
 
-Entity::BNpcPtr Territory::createBNpcFromLayoutIdDebug(Entity::Player& player, uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId )
+Entity::BNpcPtr Territory::createBNpcFromLayoutIdAndTerritory(uint32_t layoutId, uint32_t territoryId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId)
 {
-  auto infoPtr = m_bNpcBaseMap.find( layoutId );
-  if( infoPtr == m_bNpcBaseMap.end() )
+  auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+  auto SourceInstance = teriMgr.createTerritoryInstance(territoryId);   //teriMgr.getTerritoryByTypeId( territoryId );
+  if (SourceInstance == nullptr)
   {
-    PlayerMgr::sendDebug( player, "layoutID {0} not found", layoutId);
-    for( auto& npcKey : m_bNpcBaseMap) {
-        printf("- %u : %s\n", npcKey.first, npcKey.second->bnpcName.c_str());
-    }
+    printf("Unable to find Instance of territoryId %u\n", territoryId);
     return nullptr;
   }
+  auto infoPtr = SourceInstance->m_bNpcBaseMap.find( layoutId );
+  if( infoPtr == SourceInstance->m_bNpcBaseMap.end() )
+    return nullptr;
 
-  PlayerMgr::sendDebug( player, "Found infoPtr" );
   auto pBNpc = std::make_shared< Entity::BNpc >( getNextActorId(), infoPtr->second, *this, hp, bnpcType );
-  if (pBNpc == nullptr)
-  {
-      PlayerMgr::sendDebug( player, "pBNpc is nullptr" );
-      return nullptr;
-  }
   pBNpc->init();
   pBNpc->setTriggerOwnerId( triggerOwnerId );
-  PlayerMgr::sendDebug( player, "pBNpc setup" );
+  pBNpc->setTerritoryTypeId(territoryId);
   pushActor( pBNpc );
+  this->updateActorPosition(*pBNpc);
   return pBNpc;
+}
+
+void Territory::printAllBnpc( Data::ExdData& exdData, uint32_t territoryId, Entity::Player& player)
+{
+  auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+  auto SourceInstance = teriMgr.createTerritoryInstance(territoryId);
+  if (SourceInstance == nullptr)
+    return;
+  printf("List of all BNpc in territory %u\n", SourceInstance->getTerritoryTypeId());
+  PlayerMgr::sendDebug(player,"List of all BNpc in territory {0}\n", SourceInstance->getTerritoryTypeId());
+  for (auto infoPtr = SourceInstance->m_bNpcBaseMap.begin(); infoPtr != SourceInstance->m_bNpcBaseMap.end(); infoPtr++)
+  {
+    auto nameStruct = exdData.getRow< Excel::BNpcName >(infoPtr->second->NameId);
+    printf("\t-%u : %s\n", infoPtr->first, nameStruct->getString(nameStruct->data().Text.SGL).c_str());
+    PlayerMgr::sendDebug(player, "\t-{0} : {1}\n", infoPtr->first, nameStruct->getString(nameStruct->data().Text.SGL).c_str());
+
+  }
 }
 
 Entity::BNpcPtr Territory::getActiveBNpcByEntityId( uint32_t entityId )

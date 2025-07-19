@@ -72,6 +72,7 @@ namespace World::AI::Fsm
   TYPE_FORWARD( StateCombat );
   TYPE_FORWARD( StateRetreat );
   TYPE_FORWARD( StateDead );
+  TYPE_FORWARD( StateFollow );
 
   TYPE_FORWARD( RoamNextTimeReachedCondition );
   TYPE_FORWARD( RoamTargetReachedCondition );
@@ -79,6 +80,8 @@ namespace World::AI::Fsm
   TYPE_FORWARD( HateListHasEntriesCondition );
   TYPE_FORWARD( SpawnPointDistanceGtMaxDistanceCondition );
   TYPE_FORWARD( IsDeadCondition );
+  TYPE_FORWARD( isTargetOutOfFollowRange );
+  TYPE_FORWARD( isTargetInFollowRange );
 
 
 
@@ -109,6 +112,7 @@ TYPE_FORWARD( Chara );
 TYPE_FORWARD( Player );
 TYPE_FORWARD( EventObject );
 TYPE_FORWARD( BNpc );
+TYPE_FORWARD( PetNpc );
 }
 
 namespace Event

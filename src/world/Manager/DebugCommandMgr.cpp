@@ -377,6 +377,38 @@ void DebugCommandMgr::set( char* data, Entity::Player& player, std::shared_ptr< 
     fcResultPacket->data().CrestID = 0x0001000100010001;
     server.queueForPlayer( player.getCharacterId(), fcResultPacket );
   }
+  else if( subCommand == "spawn-bnpc" )
+  {
+    uint32_t layoutID;
+    uint32_t territoryID;
+    sscanf( params.c_str(), "%u %u", &layoutID, &territoryID);
+
+    auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+    auto instance = teriMgr.getTerritoryByGuId( player.getTerritoryId() );
+    auto spawned = instance.get()->createBNpcFromLayoutIdAndTerritory(layoutID, territoryID, 1, Common::BNpcType::Enemy, player.getId());
+    if (spawned != nullptr)
+    {
+      spawned->setFlag(Entity::BNpcFlag::Immobile);
+      auto playerPos = player.getPos();
+      spawned->setPos(playerPos.x, playerPos.y, playerPos.z);
+      spawned->sendPositionUpdate();
+      PlayerMgr::sendDebug( player, "Spawn successful !" );
+    }
+    else
+    {
+      PlayerMgr::sendDebug( player, "Spawn failed !" );
+    }
+  }
+  else if( subCommand == "show-bnpc" )
+  {
+    auto& exdData = Common::Service< Data::ExdData >::ref();
+    uint32_t territoryID;
+    sscanf( params.c_str(), "%u", &territoryID);
+
+    auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+    auto instance = teriMgr.getTerritoryByGuId( player.getTerritoryId() );
+    instance->printAllBnpc(exdData, territoryID, player);
+  }
   else
   {
     PlayerMgr::sendUrgent( player, "{0} is not a valid SET command.", subCommand );

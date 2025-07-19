@@ -7,13 +7,15 @@
 #include <spdlog/fmt/fmt.h>
 #include <optional>
 
+#include "BNpc.h"
 #include "Chara.h"
-#include "Quest/Quest.h"
 #include "Event/EventHandler.h"
+#include "PetNpc.h"
+#include "Quest/Quest.h"
 
+#include <array>
 #include <map>
 #include <queue>
-#include <array>
 
 namespace Sapphire::Entity
 {
@@ -263,6 +265,8 @@ namespace Sapphire::Entity
 
     /*! return the grand company */
     uint8_t getGc() const;
+
+    std::shared_ptr<Entity::PetNpc>& getPlayerPetNpc();
 
     /*! return the grand company rank */
     const std::array< uint8_t, 3 >& getGcRankArray() const;
@@ -796,6 +800,11 @@ namespace Sapphire::Entity
 
     const Common::CharaLandData& getCharaLandData( Common::LandFlagsSlot slot ) const;
 
+  public:
+    std::shared_ptr<Entity::PetNpc> m_playerPetNpc;
+    std::shared_ptr<Entity::PetNpc> generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone);
+    void removePlayerPet(TerritoryPtr instance);
+
   private:
     using InventoryMap = std::map< uint16_t, ItemContainerPtr >;
 
@@ -915,6 +924,8 @@ namespace Sapphire::Entity
 
     // housing info
     Common::CharaLandData m_charaLandData[2]{};
+
+
 
   private:
 

@@ -166,6 +166,8 @@ namespace Sapphire::Entity
     const Common::FFXIVARR_POSITION3& getRoamTargetPos() const;
     const Common::FFXIVARR_POSITION3& getSpawnPos() const;
 
+    uint32_t m_flags;
+
   private:
     uint32_t m_bNpcBaseId;
     uint32_t m_bNpcNameId;
@@ -184,8 +186,6 @@ namespace Sapphire::Entity
     uint32_t m_layoutId;
     uint32_t m_triggerOwnerId;
 
-    uint32_t m_flags;
-
     Common::BNpcType m_bnpcType;
 
     float m_naviTargetReachedDistance;
@@ -195,7 +195,12 @@ namespace Sapphire::Entity
     uint32_t m_timeOfDeath;
     uint32_t m_lastRoamTargetReachedTime;
     bool m_roamTargetReached{ false };
+    bool m_superAgro;
 
+  public:
+    void setMSuperAgro( bool mSuperAgro );
+
+  private:
     Common::FFXIVARR_POSITION3 m_spawnPos;
     Common::FFXIVARR_POSITION3 m_roamPos;
 
@@ -210,8 +215,8 @@ namespace Sapphire::Entity
     CharaPtr m_pOwner;
     World::AI::GambitPackPtr m_pGambitPack;
 
+  protected:
     std::shared_ptr< World::AI::Fsm::StateMachine > m_fsm;
-
   };
 
 }

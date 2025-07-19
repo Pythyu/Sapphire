@@ -443,9 +443,13 @@ void Action::Action::execute()
   }
 
   if( !hasClientsideTarget()  )
+  {
     buildActionResults();
+  }
   else if( auto player = m_pSource->getAsPlayer() )
+  {
     scriptMgr.onEObjHit( *player, m_targetId, getId() );
+  }
 
   // set currently casted action as the combo action if it interrupts a combo
   // ignore it otherwise (ogcds, etc.)
@@ -908,10 +912,14 @@ bool Action::Action::consumeResources()
 
 bool Action::Action::snapshotAffectedActors( std::vector< Entity::CharaPtr >& actors )
 {
+  auto player = m_pSource->getAsPlayer();
   for( const auto& actor : m_pSource->getInRangeActors( true ) )
   {
     // check for initial target validity based on flags in action exd (pc/enemy/etc.)
     if( !preFilterActor( *actor ) )
+      continue;
+
+    if (player && player->m_playerPetNpc && player->m_playerPetNpc->getId() == actor->getId())
       continue;
 
     for( const auto& filter : m_actorFilters )
@@ -924,12 +932,13 @@ bool Action::Action::snapshotAffectedActors( std::vector< Entity::CharaPtr >& ac
     }
   }
 
-  if( auto player = m_pSource->getAsPlayer() )
+  if( player )
   {
     Manager::PlayerMgr::sendDebug( *player, "Hit {} actors with {} filters", actors.size(), m_actorFilters.size() );
     for( const auto& actor : actors )
     {
       Manager::PlayerMgr::sendDebug( *player, "hit actor#{}", actor->getId() );
+
     }
   }
 
@@ -952,6 +961,7 @@ void Action::Action::addDefaultActorFilters()
       break;
     }
 
+    case Common::CastType::SelfCenteredCircle:
     case Common::CastType::CircularAOE:
     {
       auto filter = std::make_shared< World::Util::ActorFilterInRange >( m_pos, m_effectRange );

@@ -585,11 +585,19 @@ int32_t Sapphire::World::Navi::NaviProvider::addAgent( Entity::Chara& chara )
 
 void Sapphire::World::Navi::NaviProvider::updateAgentParameters( Entity::BNpc& bnpc )
 {
+  float accFactor = 1.f;
+  float speedFactor = 1.f;
+  auto agent = m_pCrowd->getAgent(bnpc.getAgentId());
+  if(agent != nullptr)
+  {
+    accFactor = agent->m_accFactor;
+    speedFactor = agent->m_speedFactor;
+  }
   dtCrowdAgentParams params{};
   std::memset( &params, 0, sizeof( params ) );
   params.height = 3.f;
-  params.maxAcceleration = 25.f;
-  params.maxSpeed = (std::pow( 2.f, 1.f * 0.35f ) + 1.f)*0.5f;
+  params.maxAcceleration = 25.f * accFactor;
+  params.maxSpeed = (std::pow( 2.f, 1.f * 0.35f ) + 1.f)*0.5f * speedFactor;
   if( bnpc.getState() == Entity::BNpcState::Combat || bnpc.getState() == Entity::BNpcState::Retreat )
     params.maxSpeed *= 2;
   params.radius = ( bnpc.getRadius() ) * 0.75f;
@@ -597,6 +605,7 @@ void Sapphire::World::Navi::NaviProvider::updateAgentParameters( Entity::BNpc& b
   params.pathOptimizationRange = params.radius * 20.0f;
   params.updateFlags = 0;
   m_pCrowd->updateAgentParameters( bnpc.getAgentId(), &params );
+
 }
 
 void Sapphire::World::Navi::NaviProvider::updateCrowd( float timeInSeconds )
@@ -711,4 +720,23 @@ void Sapphire::World::Navi::NaviProvider::removeAgentUpdateFlag( Sapphire::Entit
     return;
 
   ag->params.updateFlags &= ~flags;
+}
+
+void Sapphire::World::Navi::NaviProvider::updateAgentMaxSpeed( Entity::BNpc& bnpc, float speed)
+{
+  dtCrowdAgent* ag = m_pCrowd->getEditableAgent( bnpc.getAgentId() );
+  if( !ag || !ag->active )
+    return ;
+
+  ag->m_speedFactor = speed;
+  ag->params.maxSpeed *=  ag->m_speedFactor;
+}
+
+void Sapphire::World::Navi::NaviProvider::updateAgentAcceleration( Entity::BNpc& bnpc, float acc )
+{
+  dtCrowdAgent* ag = m_pCrowd->getEditableAgent( bnpc.getAgentId() );
+  if( !ag || !ag->active )
+    return ;
+  ag->m_accFactor = acc;
+  ag->params.maxAcceleration *=  ag->m_accFactor;
 }

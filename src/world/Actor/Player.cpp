@@ -86,6 +86,7 @@ Player::Player() :
   m_onlineStatus( 0 ),
   m_bIsConnected( false )
 {
+  m_playerPetNpc = nullptr;
   m_id = 0;
   m_currentStance = Stance::Passive;
   m_onlineStatus = 0;
@@ -1676,4 +1677,22 @@ void Player::updatePrevTerritory()
 const CharaLandData& Entity::Player::getCharaLandData( Common::LandFlagsSlot slot ) const
 {
   return m_charaLandData[ slot ];
+}
+
+std::shared_ptr<Entity::PetNpc>& Entity::Player::getPlayerPetNpc()
+{
+  return m_playerPetNpc;
+}
+
+std::shared_ptr<Entity::PetNpc> Entity::Player::generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone)
+{
+  if (m_playerPetNpc == nullptr)
+    m_playerPetNpc = std::make_shared<PetNpc>(player, id, objInstance, zone, 1, BNpcType::Friendly);
+  return m_playerPetNpc;
+}
+
+void Entity::Player::removePlayerPet(TerritoryPtr instance)
+{
+  instance->removeActor(m_playerPetNpc);
+  m_playerPetNpc = nullptr;
 }

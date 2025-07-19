@@ -245,6 +245,9 @@ namespace Sapphire::Common
   enum BNpcType : uint8_t
   {
     Friendly = 0,
+    Pet = 1,
+    UNKNOWN_2 = 2,
+    UNKNOWN_3 = 3,
     Enemy = 4,
   };
 
@@ -1880,6 +1883,7 @@ namespace Sapphire::Common
     CircularAOE = 2,
     RectangularAOE = 3,
     ConeAOE = 4,
+    SelfCenteredCircle = 5,
     CircularAoEPlaced = 7
   };
 

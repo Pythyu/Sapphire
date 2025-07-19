@@ -173,6 +173,15 @@ BNpcPtr GameObject::getAsBNpc()
   return std::dynamic_pointer_cast< BNpc, GameObject >( shared_from_this() );
 }
 
+/*! \return pointer to this instance as BNpcPtr */
+PetNpcPtr GameObject::getAsPetNpc()
+{
+  if( !isBattleNpc() )
+    return nullptr;
+  return std::dynamic_pointer_cast< PetNpc, GameObject >( shared_from_this() );
+}
+
+
 /*!
 Add a given actor to the fitting in range set according to type
 but also to the global actor map

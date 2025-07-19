@@ -138,19 +138,19 @@ public:
 
    // Trash mobs
 
-  trashList.push_back(instance.createBNpcFromLayoutId( 3281765, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3282344, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3425506, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3425507, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3425508, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3425509, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3425510, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637470, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637472, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637473, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637474, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637475, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3637476, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3281765, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3282344, instance));
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3425506, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3425507, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3425508, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3425509, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 3425510, instance)); // shade seeker
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637470, 1, Common::BNpcType::Enemy)); // giant clam
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637472, 1, Common::BNpcType::Enemy)); // giant clam
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637473, 1, Common::BNpcType::Enemy)); // giant clam
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637474, 1, Common::BNpcType::Enemy)); // giant clam
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637475, 1, Common::BNpcType::Enemy)); // giant clam
+  trashList.push_back(instance.createBNpcFromLayoutId( 3637476, 1, Common::BNpcType::Enemy)); // giant clam
   trashList.push_back(SpawnBNpcAsBlackBat(3725388, instance));
   trashList.push_back(SpawnBNpcAsBlackBat(3725390, instance));
   trashList.push_back(SpawnBNpcAsBlackBat(3725392, instance));
@@ -163,16 +163,13 @@ public:
   trashList.push_back(SpawnBNpcAsCaveAurelia(3725822, instance));
   trashList.push_back(SpawnBNpcAsCaveAurelia(3796117, instance));
   trashList.push_back(SpawnBNpcAsCaveAurelia(3796129, instance));
-  trashList.push_back(SpawnBNpcAsCaveAurelia(4217967, instance));
-  trashList.push_back(SpawnBNpcAsCaveAurelia(4217968, instance));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3725935, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3726787, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3796115, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3796116, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3796131, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3796133, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3978761, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3978770, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsFossilshell( 3725935, instance)); // Fossilshell
+  trashList.push_back(SpawnBNpcAsFossilshell( 3796115, instance)); // Fossilshell
+  trashList.push_back(SpawnBNpcAsSastashaOrobon( 3796116, instance)); // Sastasha orobon
+  trashList.push_back(SpawnBNpcAsFossilshell( 3796131, instance)); // Fossilshell
+  trashList.push_back(SpawnBNpcAsFossilshell( 3796133, instance)); // Fossilshell
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978761, 1, Common::BNpcType::Enemy)); // Baleenguard
+  trashList.push_back(instance.createBNpcFromLayoutId( 3978770, 1, Common::BNpcType::Enemy)); // Baleenguard
   trashList.push_back(instance.createBNpcFromLayoutId( 3978776, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 3978779, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 3978783, 1, Common::BNpcType::Enemy));
@@ -200,10 +197,10 @@ public:
   trashList.push_back(instance.createBNpcFromLayoutId( 3981887, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 3981888, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 3981889, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3982023, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3982024, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3988322, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 3988323, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsScurvyDog( 3982023, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 3982024, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 3988322, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 3988323, instance)); // scurvy dog
   trashList.push_back(instance.createBNpcFromLayoutId( 3988324, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 3988325, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4056165, 1, Common::BNpcType::Enemy));
@@ -213,29 +210,29 @@ public:
   trashList.push_back(instance.createBNpcFromLayoutId( 4056179, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4056186, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4056188, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4064937, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4064938, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4087814, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4087815, 1, Common::BNpcType::Enemy));
+  trashList.push_back(instance.createBNpcFromLayoutId( 4064937, 1, Common::BNpcType::Enemy)); // Baleenguard
+  trashList.push_back(instance.createBNpcFromLayoutId( 4064938, 1, Common::BNpcType::Enemy)); // Baleenguard
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4087814, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4087815, instance)); // scurvy dog
   trashList.push_back(instance.createBNpcFromLayoutId( 4106354, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4106627, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4106638, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4106641, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4125433, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4125434, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4106638, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4106641, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4125433, instance)); // scurvy dog
+  trashList.push_back(SpawnBNpcAsScurvyDog( 4125434, instance)); // scurvy dog
   trashList.push_back(instance.createBNpcFromLayoutId( 4138739, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4142091, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4142092, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4142094, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4142095, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4142096, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191890, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191892, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191893, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191894, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191895, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191896, 1, Common::BNpcType::Enemy));
-  trashList.push_back(instance.createBNpcFromLayoutId( 4191897, 1, Common::BNpcType::Enemy));
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191890, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191892, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191893, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191894, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191895, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191896, instance)); // shade seeker
+  trashList.push_back(SpawnBNpcAsShadeSeeker( 4191897, instance)); // shade seeker
   trashList.push_back(instance.createBNpcFromLayoutId( 4192074, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4192083, 1, Common::BNpcType::Enemy));
   trashList.push_back(instance.createBNpcFromLayoutId( 4334189, 1, Common::BNpcType::Enemy));
@@ -244,23 +241,80 @@ public:
 
   Entity::BNpcPtr SpawnBNpcAsBlackBat(uint32_t layoutId, InstanceContent& instance)
   {
-    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy);
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
     auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 3 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 2 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 4 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 6 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 8 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 10 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 12 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 14 );
     npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
     return npc;
   }
 
   Entity::BNpcPtr SpawnBNpcAsCaveAurelia(uint32_t layoutId, InstanceContent& instance)
   {
-    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy);
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
     auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 1 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 3 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 5 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 7, 0 ), 7 );
-    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 588, 0 ), 9 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 2 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 4 );
+    newGambitPack->addTimeLine( World::AI::make_HPSelfPctLessThanTargetCondition( 50 ), World::Action::make_Action( npc->getAsChara(), 588, 0 ), 6 );
     npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
+    return npc;
+  }
+
+  Entity::BNpcPtr SpawnBNpcAsFossilshell(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 2 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 872, 0 ), 4 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 907, 0 ), 6 );
+    npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
+    return npc;
+  }
+
+  Entity::BNpcPtr SpawnBNpcAsSastashaOrobon(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 544, 0 ), 2 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 541, 0 ), 4 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 6 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 8 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 541, 0 ), 11 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 13 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 15 );
+    npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
+    return npc;
+  }
+
+  Entity::BNpcPtr SpawnBNpcAsScurvyDog(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 2 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 4 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 870, 0 ), 6 );
+    npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
+    return npc;
+  }
+
+  Entity::BNpcPtr SpawnBNpcAsShadeSeeker(uint32_t layoutId, InstanceContent& instance)
+  {
+    auto npc = instance.createBNpcFromLayoutId( layoutId, 1, Common::BNpcType::Enemy, 0, Entity::BNpcFlag::NoDeaggro);
+    auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 966, 0 ), 3 );
+    newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( npc->getAsChara(), 966, 0 ), 6 );
+    npc->updateGambitTimeline(newGambitPack);
+    npc->setMSuperAgro(true);
     return npc;
   }
 
@@ -316,7 +370,8 @@ public:
                                                               }
                                                               else
                                                               {
-                                                                // TODO: spawn adds
+                                                                trashList.push_back(SpawnBNpcAsCaveAurelia(4217967, instance));
+                                                                trashList.push_back(SpawnBNpcAsCaveAurelia(4217968, instance));
                                                               }
                                                             },
                                                             nullptr, getId() );
@@ -328,7 +383,18 @@ public:
     if( eobj.getName() == "Inconspicuousswitch" )
     {
       if( !chopper )
-        chopper = instance.createBNpcFromLayoutId( 4035011, 400, Common::BNpcType::Enemy );
+      {
+        chopper = instance.createBNpcFromLayoutId( 4035011, 3828, Common::BNpcType::Enemy );
+        auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 870, 0 ), 2 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 870, 0 ), 4 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 351, 0 ), 6 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 870, 0 ), 8 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 870, 0 ), 10 );
+        newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( chopper->getAsChara(), 351, 0 ), 12 );
+        chopper->updateGambitTimeline(newGambitPack);
+        chopper->setMSuperAgro(true);
+      }
       else if( chopper && !chopper->isAlive() )
       {
         eventMgr().eventActionStart( player, getId(), EventActionTouch,

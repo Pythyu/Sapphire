@@ -19,6 +19,11 @@ public:
     if( !pPlayer )
       return;
 
+    auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+    auto instance = teriMgr.getTerritoryByGuId( pPlayer->getTerritoryId() );
+
+    pPlayer->removePlayerPet(instance);
+
     auto teleportQuery = pPlayer->getTeleportQuery();
 
     if( pPlayer->getCurrency( Common::CurrencyType::Gil ) < teleportQuery.cost ||

@@ -3,6 +3,8 @@
 #include "Actor/BNpc.h"
 #include <Util/Util.h>
 #include <Util/UtilMath.h>
+#include "Actor/PetNpc.h"
+#include "Actor/Player.h"
 
 #pragma once
 
@@ -88,6 +90,40 @@ namespace Sapphire::World::AI::Fsm
       if( !src.isAlive() )
         return true;
 
+      return false;
+    }
+  };
+
+  class isTargetOutOfFollowRange : public Condition
+  {
+  public:
+    bool isConditionMet( Sapphire::Entity::BNpc& src ) const override
+    {
+      auto petNpc = src.getAsPetNpc();
+      // TODO: Only made to work on pet for now
+      if (!petNpc)
+        return false;
+      auto targetPlayer = petNpc->getPlayerOwner();
+
+      if( Common::Util::distance( src.getPos(), targetPlayer->getPos() ) > petNpc->m_followRange )
+        return true;
+      return false;
+    }
+  };
+
+  class isTargetInFollowRange : public Condition
+  {
+  public:
+    bool isConditionMet( Sapphire::Entity::BNpc& src ) const override
+    {
+      auto petNpc = src.getAsPetNpc();
+      // TODO: Only made to work on pet for now
+      if (!petNpc)
+        return false;
+      auto targetPlayer = petNpc->getPlayerOwner();
+
+      if( Common::Util::distance( src.getPos(), targetPlayer->getPos() ) <= petNpc->m_followRange )
+        return true;
       return false;
     }
   };

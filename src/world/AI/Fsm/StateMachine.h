@@ -18,6 +18,11 @@ namespace Sapphire::World::AI::Fsm
 
   protected:
     std::vector< StatePtr > m_states;
+
+  public:
+    StatePtr& getState(uint32_t index);
+
+  protected:
     StatePtr m_pCurrentState;
   };
 }

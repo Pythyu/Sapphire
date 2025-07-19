@@ -1,8 +1,8 @@
 #include <cstdint>
-#include "ForwardsZone.h"
 #include "Actor/BNpc.h"
 #include "StateMachine.h"
 #include "State.h"
+#include "ForwardsZone.h"
 
 #pragma once
 
@@ -35,4 +35,10 @@ void AI::Fsm::StateMachine::update( Entity::BNpc& bnpc, uint64_t tickCount )
   }
 
   m_pCurrentState->onUpdate( bnpc, tickCount );
+}
+
+
+AI::Fsm::StatePtr& AI::Fsm::StateMachine::getState(uint32_t index)
+{
+  return m_states[index];
 }

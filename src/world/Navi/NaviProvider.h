@@ -72,6 +72,10 @@ namespace Sapphire::World::Navi
 
     void updateAgentParameters( Entity::BNpc& bnpc );
 
+    void updateAgentMaxSpeed( Entity::BNpc& bnpc, float speed);
+
+    void updateAgentAcceleration( Entity::BNpc& bnpc, float acc);
+
   protected:
     std::string m_internalName;
 
@@ -81,6 +85,7 @@ namespace Sapphire::World::Navi
     std::unique_ptr< dtCrowd > m_pCrowd;
 
     float m_polyFindRange[ 3 ];
+
 
   private:
     int32_t fixupCorridor( dtPolyRef* path, int32_t npath, int32_t maxPath, const dtPolyRef* visited, int32_t nvisited );

@@ -121,6 +121,8 @@ namespace Sapphire::Entity
 
     BNpcPtr getAsBNpc();
 
+    PetNpcPtr getAsPetNpc();
+
     uint32_t getTerritoryTypeId() const;
     void setTerritoryTypeId( uint32_t territoryTypeId );
 

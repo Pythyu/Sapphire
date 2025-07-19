@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <cstring>
 #include <Exd/Structs.h>
+#include <Exd/ExdData.h>
 
 namespace Sapphire
 {
@@ -176,10 +177,11 @@ namespace Sapphire
 
     void addEObj( Entity::EventObjectPtr object );
 
-    Entity::BNpcPtr createBNpcFromLayoutId( uint32_t levelId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0 );
+    Entity::BNpcPtr createBNpcFromLayoutId( uint32_t levelId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0, uint32_t npcFlag = 0);
 
+    Entity::BNpcPtr createBNpcFromLayoutIdAndTerritory(uint32_t layoutId, uint32_t territoryId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0);
 
-    Entity::BNpcPtr createBNpcFromLayoutIdDebug(Entity::Player& player, uint32_t layoutId, uint32_t hp, Common::BNpcType bnpcType, uint32_t triggerOwnerId = 0);
+    void printAllBnpc( Sapphire::Data::ExdData& exdData, uint32_t territoryId, Entity::Player& player);
 
     Entity::BNpcPtr getActiveBNpcByEntityId( uint32_t entityId );
 
