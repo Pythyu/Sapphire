@@ -34,6 +34,7 @@ namespace Sapphire::World::AI
     void update( Entity::BNpc& bnpc, uint64_t tickCount );
     void addTimeLine( const GambitRulePtr& pRule, uint32_t offsetInSeconds );
     void addTimeLine( const GambitTargetConditionPtr& targetCondition, const Action::ActionPtr& action, uint32_t offsetInSeconds );
+    Action::ActionPtr peekCurrentIndexAction();
     uint8_t getLoopCount() const;
     uint8_t getCurrentIndex() const;
     void start();

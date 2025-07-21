@@ -24,3 +24,8 @@ void AI::Fsm::StateDead::onExit( Entity::BNpc& bnpc )
 
 }
 
+std::string AI::Fsm::StateDead::getName()
+{
+  return "StateDead";
+}
+

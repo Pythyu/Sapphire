@@ -5,6 +5,7 @@
 #include "Util/UtilMath.h"
 #include "Manager/TerritoryMgr.h"
 #include "Service.h"
+#include "Action/Action.h"
 
 #include "Territory/Territory.h"
 #include "Navi/NaviProvider.h"
@@ -67,10 +68,12 @@ const PlayerPtr& PetNpc::getPlayerOwner() const
 
 void PetNpc::init()
 {
+  setFlag(NoDeaggro);
   BNpc::init();
   auto stateFollow = World::AI::Fsm::make_StateFollow();
   auto stateIdle = m_fsm->getState(0);
-  auto stateCombat = World::AI::Fsm::make_StateCombat();
+  auto CombatTransition = stateIdle->getIndexedTransition(0);
+  auto stateCombat = CombatTransition->getTargetState();
 
   stateFollow->addTransition(stateIdle, World::AI::Fsm::make_isTargetInFollowRange());
   stateFollow->addTransition(stateCombat, World::AI::Fsm::make_HateListHasEntriesCondition());

@@ -47,3 +47,8 @@ void AI::Fsm::StateRoam::onExit( Entity::BNpc& bnpc )
   bnpc.setRoamTargetReached( false );
 }
 
+std::string AI::Fsm::StateRoam::getName()
+{
+  return "StateRoam";
+}
+

@@ -16,6 +16,8 @@ namespace Sapphire::World::AI::Fsm
     virtual void onEnter( Entity::BNpc& bnpc ) { }
     virtual void onExit( Entity::BNpc& bnpc ) { }
 
+    virtual std::string getName() { }
+
     void addTransition( TransitionPtr transition )
     {
       m_transitions.push_back( transition );
@@ -35,6 +37,14 @@ namespace Sapphire::World::AI::Fsm
           return transition;
       }
       return nullptr;
+    }
+
+    TransitionPtr getIndexedTransition(uint32_t index)
+    {
+      if(index >= m_transitions.size())
+        return nullptr;
+
+      return m_transitions[index];
     }
 
   private:

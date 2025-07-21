@@ -38,3 +38,8 @@ void AI::Fsm::StateFollow::onExit( Sapphire::Entity::BNpc& bnpc )
 {
 }
 
+std::string AI::Fsm::StateFollow::getName()
+{
+  return "StateFollow";
+}
+

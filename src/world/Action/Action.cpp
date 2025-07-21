@@ -228,6 +228,11 @@ bool Action::Action::hasCastTime() const
   return m_castTimeMs > 0;
 }
 
+bool Action::Action::checkRange(float distance)
+{
+  return distance <= (float)m_range;
+}
+
 bool Action::Action::isAbility() const
 {
   return m_category == ActionCategory::Ability;
@@ -1005,8 +1010,8 @@ bool Action::Action::preFilterActor( Entity::GameObject& actor ) const
   
   if( ( m_lutEntry.potency > 0 || m_lutEntry.curePotency > 0 ) && !chara->isAlive() ) // !m_canTargetDead not working for aoe
     return false;
-
-  if( m_lutEntry.potency > 0 && m_pSource->getObjKind() == chara->getObjKind() ) // !m_canTargetFriendly not working for aoe
+  // TODO: Fix aoe friendly fire
+  if( m_lutEntry.potency > 0 && m_pSource->getObjKind() == chara->getObjKind() && m_pSource->getObjKind() != ObjKind::BattleNpc) // !m_canTargetFriendly not working for aoe
     return false;
 
   if( ( m_lutEntry.potency == 0 && m_lutEntry.curePotency > 0 ) && m_pSource->getObjKind() != chara->getObjKind() ) // !m_canTargetHostile not working for aoe
@@ -1062,4 +1067,8 @@ uint64_t Action::Action::getCastTimeRest() const
 void Action::Action::enableGenericHandler()
 {
   m_enableGenericHandler = true;
+}
+void Action::Action::setMRange( int8_t mRange )
+{
+  m_range = mRange;
 }

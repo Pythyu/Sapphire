@@ -24,5 +24,8 @@ namespace Sapphire::World::AI::Fsm
 
   protected:
     StatePtr m_pCurrentState;
+
+  public:
+    const StatePtr& getCurrentState() const;
   };
 }

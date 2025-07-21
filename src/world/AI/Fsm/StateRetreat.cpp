@@ -39,3 +39,8 @@ void AI::Fsm::StateRetreat::onExit( Entity::BNpc& bnpc )
   bnpc.setInvincibilityType( Common::InvincibilityType::InvincibilityNone );
 }
 
+std::string AI::Fsm::StateRetreat::getName()
+{
+  return "StateRetreat";
+}
+

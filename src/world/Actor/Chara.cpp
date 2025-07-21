@@ -26,6 +26,7 @@
 #include "Manager/MgrUtil.h"
 #include "Manager/PlayerMgr.h"
 #include "Common.h"
+#include "AI/GambitPack.h"
 
 using namespace Sapphire;
 using namespace Sapphire::Common;
@@ -335,6 +336,38 @@ bool Chara::checkAction()
 
   return true;
 
+}
+
+bool Chara::checkCurrentActionRange(float distance)
+{
+  if( m_pCurrentAction == nullptr )
+  {
+    auto bnpc = getAsBNpc();
+    if(bnpc != nullptr)
+    {
+      if(bnpc->m_pGambitPack == nullptr)
+        return false;
+
+      auto gambitType = bnpc->m_pGambitPack->getType();
+      if( gambitType == AI::GambitPackType::TimeLine )
+      {
+        auto curTimeline = bnpc->m_pGambitPack->getAsTimeLine();
+        if(curTimeline == nullptr)
+          return false;
+        auto curAction = curTimeline->peekCurrentIndexAction();
+        if(curAction != nullptr && curAction->checkRange( distance ) )
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  if (m_pCurrentAction->hasCastTime() && m_pCurrentAction->checkRange(distance))
+    return true;
+
+  return false;
 }
 
 void Chara::update( uint64_t tickCount )

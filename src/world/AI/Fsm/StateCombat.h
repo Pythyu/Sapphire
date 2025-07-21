@@ -16,5 +16,6 @@ namespace Sapphire::World::AI::Fsm
     void onEnter( Entity::BNpc& bnpc );
     void onExit( Entity::BNpc& bnpc );
 
+    std::string getName();
   };
 }

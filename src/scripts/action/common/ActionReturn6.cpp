@@ -18,6 +18,10 @@ public:
       return;
 
     auto pPlayer = action.getSourceChara()->getAsPlayer();
+    auto& teriMgr = Sapphire::Common::Service< Sapphire::World::Manager::TerritoryMgr >::ref();
+    auto instance = teriMgr.getTerritoryByGuId( pPlayer->getTerritoryId() );
+
+    pPlayer->removePlayerPet(instance);
 
     warpMgr().requestPlayerTeleport( *pPlayer, pPlayer->getHomepoint(), 3 );
   }

@@ -1693,6 +1693,9 @@ std::shared_ptr<Entity::PetNpc> Entity::Player::generatePlayerPetNpc(PlayerPtr p
 
 void Entity::Player::removePlayerPet(TerritoryPtr instance)
 {
+  if(m_playerPetNpc == nullptr)
+    return;
+
   instance->removeActor(m_playerPetNpc);
   m_playerPetNpc = nullptr;
 }

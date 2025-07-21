@@ -15,6 +15,6 @@ namespace Sapphire::World::AI::Fsm
     void onUpdate( Entity::BNpc& bnpc, uint64_t tickCount );
     void onEnter( Entity::BNpc& bnpc );
     void onExit( Entity::BNpc& bnpc );
-
+    std::string getName();
   };
 }

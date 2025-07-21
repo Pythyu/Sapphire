@@ -51,14 +51,19 @@ void AI::Fsm::StateCombat::onUpdate( Entity::BNpc& bnpc, uint64_t tickCount )
   if( pNaviProvider->syncPosToChara( bnpc ) )
     bnpc.sendPositionUpdate();
 
-  if( distance < ( bnpc.getNaviTargetReachedDistance() + pHatedActor->getRadius() ) )
+  bool meleeRange = distance < ( bnpc.getNaviTargetReachedDistance() + pHatedActor->getRadius() );
+
+  if( meleeRange || bnpc.checkCurrentActionRange(distance))
   {
     if( !bnpc.hasFlag( Entity::TurningDisabled ) && bnpc.face( pHatedActor->getPos() ) )
       bnpc.sendPositionUpdate();
 
     if( !bnpc.checkAction() )
       bnpc.processGambits( tickCount );
+  }
 
+  if(meleeRange)
+  {
     // in combat range. ATTACK!
     bnpc.autoAttack( pHatedActor );
   }
@@ -75,5 +80,10 @@ void AI::Fsm::StateCombat::onExit( Entity::BNpc& bnpc )
   bnpc.changeTarget( Common::INVALID_GAME_OBJECT_ID64 );
   bnpc.setStance( Common::Stance::Passive );
   bnpc.setOwner( nullptr );
+}
+
+std::string AI::Fsm::StateCombat::getName()
+{
+  return "StateCombat";
 }
 

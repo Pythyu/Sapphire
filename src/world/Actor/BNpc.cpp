@@ -397,7 +397,6 @@ bool BNpc::moveTo( const FFXIVARR_POSITION3& pos )
 
 bool BNpc::moveTo( const Chara& targetChara )
 {
-
   auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
   auto pZone = teriMgr.getTerritoryByGuId( getTerritoryId() );
 

@@ -41,6 +41,9 @@ public:
     auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
     auto player = action.getSourceChara()->getAsPlayer();
     auto instance = teriMgr.getTerritoryByGuId( player->getTerritoryId() );
+
+    player->removePlayerPet(instance);
+
     std::shared_ptr<Common::BNPCInstanceObject> carbuncle_instance(new Common::BNPCInstanceObject());
     carbuncle_instance->NameId = 1401;
     carbuncle_instance->territoryType = instance->getTerritoryTypeId();
@@ -61,10 +64,9 @@ public:
       spawned->m_flags = 0;
       spawned->setTriggerOwnerId( player->getId() );
       auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
-      newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( spawned->getAsChara(), 637, 0 ), 3 );
-      newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( spawned->getAsChara(), 637, 0 ), 6 );
-      newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( spawned->getAsChara(), 637, 0 ), 9 );
-      newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), World::Action::make_Action( spawned->getAsChara(), 637, 0 ), 12 );
+      auto baseAction = World::Action::make_Action( spawned->getAsChara(), 637, 0 );
+      baseAction->setMRange(25);
+      newGambitPack->addTimeLine( World::AI::make_TopHateTargetCondition(), baseAction, 3 );
       spawned->updateGambitTimeline(newGambitPack);
       auto playerPos = player->getPos();
       auto pNavi = instance->getNaviProvider();

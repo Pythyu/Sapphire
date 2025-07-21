@@ -18,3 +18,8 @@ void AI::Fsm::StateIdle::onExit( Entity::BNpc& bnpc )
 {
 }
 
+std::string AI::Fsm::StateIdle::getName()
+{
+  return "StateIdle";
+}
+

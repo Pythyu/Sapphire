@@ -42,3 +42,8 @@ AI::Fsm::StatePtr& AI::Fsm::StateMachine::getState(uint32_t index)
 {
   return m_states[index];
 }
+
+const AI::Fsm::StatePtr& AI::Fsm::StateMachine::getCurrentState() const
+{
+  return m_pCurrentState;
+}

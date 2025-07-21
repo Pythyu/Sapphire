@@ -168,6 +168,8 @@ namespace Sapphire::Entity
 
     uint32_t m_flags;
 
+    World::AI::GambitPackPtr m_pGambitPack;
+
   private:
     uint32_t m_bNpcBaseId;
     uint32_t m_bNpcNameId;
@@ -213,7 +215,6 @@ namespace Sapphire::Entity
     Common::FFXIVARR_POSITION3 m_naviTarget;
 
     CharaPtr m_pOwner;
-    World::AI::GambitPackPtr m_pGambitPack;
 
   protected:
     std::shared_ptr< World::AI::Fsm::StateMachine > m_fsm;

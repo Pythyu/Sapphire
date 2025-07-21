@@ -83,6 +83,8 @@ namespace Sapphire::World::Action
      */
     bool hasCastTime() const;
 
+    bool checkRange(float distance);
+
     /*!
      * @brief Tests whether the action is an ability/oGCD
      * @return true if action is an ability
@@ -197,6 +199,11 @@ namespace Sapphire::World::Action
     uint32_t m_recastTimeMs{};
     uint8_t m_cooldownGroup{};
     int8_t m_range{};
+
+  public:
+    void setMRange( int8_t mRange );
+
+  protected:
     uint8_t m_effectRange{};
     uint8_t m_effectWidth{};
     uint8_t m_xAxisModifier{};

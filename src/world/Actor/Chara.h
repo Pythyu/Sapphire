@@ -249,6 +249,8 @@ namespace Sapphire::Entity
 
     virtual bool checkAction();
 
+    virtual bool checkCurrentActionRange(float distance);
+
     virtual void update( uint64_t tickCount );
 
     Common::FFXIVARR_POSITION3 getForwardVector() const;

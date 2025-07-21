@@ -38,6 +38,20 @@ void AI::GambitTimeLinePack::addTimeLine( const GambitTargetConditionPtr& target
   m_gambits.push_back( timeLine );
 }
 
+Action::ActionPtr AI::GambitTimeLinePack::peekCurrentIndexAction()
+{
+  if(m_gambits.empty())
+    return nullptr;
+
+  auto currentTimeline = m_gambits[getCurrentIndex()];
+  auto pRule = currentTimeline.first;
+
+  if (pRule == nullptr)
+    return nullptr;
+
+  return pRule->getActionPtr();
+}
+
 uint8_t AI::GambitTimeLinePack::getLoopCount() const
 {
   return m_loopCount;
