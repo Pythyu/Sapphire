@@ -802,7 +802,7 @@ namespace Sapphire::Entity
 
   public:
     std::shared_ptr<Entity::PetNpc> m_playerPetNpc;
-    std::shared_ptr<Entity::PetNpc> generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone);
+    std::shared_ptr<Entity::PetNpc> generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::string petName, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone);
     void removePlayerPet(TerritoryPtr instance);
 
   private:

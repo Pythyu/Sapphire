@@ -95,7 +95,7 @@ void PartyMgr::onLeave( Sapphire::Entity::Player &leavingPlayer )
   if( !leadingPlayer )
     return;
 
-  if( party->PartyCount == 2 )
+  if( party->PartyCount <= 2 )
   {
     onDisband( *leadingPlayer );
   }
@@ -203,6 +203,8 @@ void PartyMgr::onMemberDisconnect( Entity::Player& disconnectingPlayer )
                                                        makeZonePacket< FFXIVIpcUpdateParty >( member->getId() ) } );
   }
 
+
+
   sendPartyUpdate( *party );
 }
 
@@ -294,6 +296,31 @@ void PartyMgr::onChangeLeader( const std::string& newLeaderName, Entity::Player&
   sendPartyUpdate( *party );
 }
 
+void PartyMgr::onJoinPet(Entity::Player& petOwner)
+{
+  auto& server = Common::Service< World::WorldServer >::ref();
+  auto& ccMgr = Common::Service< World::Manager::ChatChannelMgr >::ref();
+
+  if( petOwner.getPartyId() != 0 )
+  {
+    sendPartyUpdate( *getParty(petOwner.getPartyId()));
+    return;
+  }
+
+  auto partyId = createParty();
+  auto party = getParty( partyId );
+  assert( party );
+  petOwner.setPartyId( partyId );
+  petOwner.addOnlineStatus( Common::OnlineStatus::PartyMember );
+
+  ccMgr.addToChannel( party->ChatChannel, petOwner );
+
+  party->MemberId.push_back( petOwner.getId() );
+  party->PartyCount = 1;
+  party->LeaderId = petOwner.getId();
+  sendPartyUpdate(*party);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 uint64_t PartyMgr::createParty()
@@ -320,14 +347,20 @@ PartyPtr PartyMgr::getParty( uint64_t partyId )
   return nullptr;
 }
 
+uint64_t PartyMgr::getTotalPartyNumber()
+{
+  return m_partyIdMap.size();
+}
+
 std::vector< Entity::PlayerPtr > PartyMgr::getPartyMembers( Party& party )
 {
   std::vector< Entity::PlayerPtr > members;
 
   auto& playerMgr = Common::Service< World::Manager::PlayerMgr >::ref();
+
   for( auto& memberId : party.MemberId )
   {
-    if( memberId == 0 )
+    if( memberId == 0)
       continue;
 
     auto pPlayer = playerMgr.getPlayer( memberId );
@@ -366,6 +399,7 @@ void PartyMgr::sendPartyUpdate( Party& party )
 
     memberEntry.ParentEntityId = Common::INVALID_GAME_OBJECT_ID;
     memberEntry.PetEntityId = Common::INVALID_GAME_OBJECT_ID;
+
     memberEntry.Hp = member->getHp();
     memberEntry.HpMax = member->getMaxHp();
     memberEntry.Mp = member->getMp();
@@ -378,9 +412,10 @@ void PartyMgr::sendPartyUpdate( Party& party )
     memberEntry.Tp = member->getTp();
     memberEntry.Role = classJob->data().Role;
     /*
-    memberEntry.CharaId = member->getContentId();
+    memberEntry.CharaId = member->getCharacterId();
     memberEntry.EntityId = member->getId();
-    strcpy( memberEntry.Name, member->getName().c_str() );*/
+    strcpy( memberEntry.Name, member->getName().c_str() );
+     */
 
     entries.push_back( memberEntry );
   }

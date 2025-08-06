@@ -141,6 +141,8 @@ namespace Sapphire::Network::ActorControl
     CompanionMsg2 = 0x103,
     ShowPetHotbar = 0x104,
 
+    SetPetEntityId = 0x107,
+
     ActionLearnMsg = 0x109,
     ActorFadeOut = 0x10A,
     ActorFadeIn = 0x10B,

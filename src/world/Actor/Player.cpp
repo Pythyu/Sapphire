@@ -803,6 +803,7 @@ void Player::removeCondition( Common::PlayerCondition flag )
 void Player::update( uint64_t tickCount )
 {
   // todo: better way to handle this override chara update
+
   Service< World::Manager::PlayerMgr >::ref().onUpdate( *this, tickCount );
 
   Chara::update( tickCount );
@@ -1684,10 +1685,10 @@ std::shared_ptr<Entity::PetNpc>& Entity::Player::getPlayerPetNpc()
   return m_playerPetNpc;
 }
 
-std::shared_ptr<Entity::PetNpc> Entity::Player::generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone)
+std::shared_ptr<Entity::PetNpc> Entity::Player::generatePlayerPetNpc(PlayerPtr player, uint32_t id, std::string petName, std::shared_ptr<Common::BNPCInstanceObject> objInstance, const Territory& zone)
 {
   if (m_playerPetNpc == nullptr)
-    m_playerPetNpc = std::make_shared<PetNpc>(player, id, objInstance, zone, 1, BNpcType::Friendly);
+    m_playerPetNpc = std::make_shared<PetNpc>(player, id, petName,objInstance, zone, 1, BNpcType::Friendly);
   return m_playerPetNpc;
 }
 
@@ -1696,6 +1697,26 @@ void Entity::Player::removePlayerPet(TerritoryPtr instance)
   if(m_playerPetNpc == nullptr)
     return;
 
+  printf("[call start] removePlayerPet from %s\n", instance->getName().c_str());
+  auto& partyMgr = Common::Service< World::Manager::PartyMgr >::ref();
+  printf("Party Number: %llu\n", partyMgr.getTotalPartyNumber());
+
   instance->removeActor(m_playerPetNpc);
   m_playerPetNpc = nullptr;
+
+  if(getPartyId() != 0)
+  {
+    printf("Party update sent !\n");
+    auto party = partyMgr.getParty( getPartyId() );
+    if(party != nullptr)
+    {
+      partyMgr.sendPartyUpdate( *party );
+    }
+    else
+    {
+      printf("Unable to find player's party to remove pet from.\n");
+    }
+  }
+
+  printf("[call end] removePlayerPet from %s\n", instance->getName().c_str());
 }

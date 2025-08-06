@@ -25,6 +25,19 @@ float Util::distance( const Sapphire::Common::FFXIVARR_POSITION3& pos1,
   return sqrtf( distanceSq( pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z ) );
 }
 
+bool Util::checkLineCircleCollision( float CenterX, float CenterZ, float radius,
+                                      const Sapphire::Common::FFXIVARR_POSITION3& linePos1,
+                                      const Sapphire::Common::FFXIVARR_POSITION3& linePos2 )
+{
+  auto a = linePos2.z - linePos1.z;
+  auto b = linePos1.x - linePos2.x;
+  auto c = -a * linePos1.x - linePos1.z * b;
+
+  auto dist = (abs(a * CenterX + b * CenterZ + c)) / sqrt(a*a + b*b);
+
+  return radius >= dist;
+}
+
 float Util::distance2DSq( float x, float y, float x1, float y1 )
 {
   float deltaX = x - x1;

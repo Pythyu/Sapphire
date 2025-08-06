@@ -1887,6 +1887,13 @@ namespace Sapphire::Common
     CircularAoEPlaced = 7
   };
 
+  enum CombatStyleType : uint8_t {
+    AllIn = 0,
+    KeepRangeIfPossible = 1,
+    InPlace = 2
+  };
+
+
   enum class Role : uint8_t
   {
     None,

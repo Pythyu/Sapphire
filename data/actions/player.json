@@ -75552,7 +75552,7 @@
   },
   "5939": {
     "name": "Explosion",
-    "potency": 0,
+    "potency": 300,
     "comboPotency": 0,
     "flankPotency": 0,
     "frontPotency": 0,

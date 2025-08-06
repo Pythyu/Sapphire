@@ -67,6 +67,8 @@ namespace Sapphire::World::Manager
 
     void facing( char* data, Sapphire::Entity::Player& player, std::shared_ptr< DebugCommand > command );
 
+    std::vector<std::shared_ptr<Entity::PetNpc>> spawnedList;
+
   };
 
 }

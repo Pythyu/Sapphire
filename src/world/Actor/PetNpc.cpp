@@ -34,14 +34,15 @@ PetNpc::PetNpc( PlayerPtr owner, uint32_t id, std::shared_ptr< Common::BNPCInsta
 {
   m_playerOwner = owner;
   m_movingToPlayer = false;
-  m_followRange = .5f;
+  m_followRange = .8f;
 }
 
-PetNpc::PetNpc( PlayerPtr owner, uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, const Territory& zone, uint32_t hp, Common::BNpcType type ) : BNpc(id, pInfo, zone, hp, type)
+PetNpc::PetNpc( PlayerPtr owner, uint32_t id, std::string petName, std::shared_ptr< Common::BNPCInstanceObject > pInfo, const Territory& zone, uint32_t hp, Common::BNpcType type ) : BNpc(id, pInfo, zone, hp, type)
 {
   m_playerOwner = owner;
   m_movingToPlayer = false;
-  m_followRange = .5f;
+  m_followRange = .8f;
+  std::strcpy(m_name, petName.c_str());
 }
 
 PetNpc::~PetNpc() = default;
@@ -66,6 +67,43 @@ const PlayerPtr& PetNpc::getPlayerOwner() const
   return m_playerOwner;
 }
 
+void PetNpc::petBehavior(PetBaseAction action)
+{
+  switch( action )
+  {
+    case Away:
+      hateListClear();
+      break;
+    case Heel:
+      removeFlag(Immobile);
+      break;
+    case Stay:
+      setFlag(Immobile);
+      break;
+    case Guard:
+      removeFlag(NoAggro);
+      updateGambitTimeline(m_ObeyGambitPack->getAsTimeLine());
+      break;
+    case Steady:
+      setFlag(NoAggro);
+      updateGambitTimeline(m_SteadyGambitPack->getAsTimeLine());
+      break;
+    case Sic:
+      removeFlag(NoAggro);
+      updateGambitTimeline(m_SicGambitPack->getAsTimeLine());
+      break;
+    case Obey:
+      removeFlag(NoAggro);
+      updateGambitTimeline(m_ObeyGambitPack->getAsTimeLine());
+      break;
+
+
+    default:
+      Logger::debug("PetAction {0} isn't implemented yet !\n", action);
+      break;
+  }
+}
+
 void PetNpc::init()
 {
   setFlag(NoDeaggro);
@@ -79,4 +117,24 @@ void PetNpc::init()
   stateFollow->addTransition(stateCombat, World::AI::Fsm::make_HateListHasEntriesCondition());
 
   stateIdle->addTransition(stateFollow, World::AI::Fsm::make_isTargetOutOfFollowRange());
+}
+const Sapphire::World::AI::GambitPackPtr& PetNpc::getObeyGambitPack() const
+{
+  return m_ObeyGambitPack;
+}
+const Sapphire::World::AI::GambitPackPtr& PetNpc::getSicGambitPack() const
+{
+  return m_SicGambitPack;
+}
+void PetNpc::setObeyGambitPack( const Sapphire::World::AI::GambitPackPtr& mObeyGambitPack )
+{
+  m_ObeyGambitPack = mObeyGambitPack;
+}
+void PetNpc::setSicGambitPack( const Sapphire::World::AI::GambitPackPtr& mSicGambitPack )
+{
+  m_SicGambitPack = mSicGambitPack;
+}
+void PetNpc::setSteadyGambitPack( const Sapphire::World::AI::GambitPackPtr& mSteadyGambitPack )
+{
+  m_SteadyGambitPack = mSteadyGambitPack;
 }

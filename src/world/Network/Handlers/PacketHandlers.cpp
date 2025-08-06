@@ -477,6 +477,10 @@ void Sapphire::Network::GameConnection::logoutHandler( const Packets::FFXIVARR_P
 //  logoutPacket->data().flags2 = 0x2000;
   queueOutPacket( logoutPacket );
 
+  auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+  auto instance = teriMgr.getTerritoryByGuId( player.getTerritoryId() );
+  player.removePlayerPet(instance);
+
   player.setMarkedForRemoval();
 }
 

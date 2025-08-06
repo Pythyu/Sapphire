@@ -7,6 +7,25 @@
 
 namespace Sapphire::World::AI::Fsm
 {
+
+  class CombatAllIn
+  {
+  public:
+    static void onUpdate( Entity::BNpc& bnpc, uint64_t tickCount );
+  };
+
+  class CombatKeepRangeIfPossible
+  {
+  public:
+    static void onUpdate( Entity::BNpc& bnpc, uint64_t tickCount );
+  };
+
+  class CombatInPlace
+  {
+  public:
+    static void onUpdate( Entity::BNpc& bnpc, uint64_t tickCount );
+  };
+
   class StateCombat : public State
   {
   public:

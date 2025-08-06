@@ -53,6 +53,8 @@
 
 #include "Session.h"
 
+#include "vector"
+
 
 using namespace Sapphire::Network;
 using namespace Sapphire::Network::Packets;
@@ -392,6 +394,43 @@ void DebugCommandMgr::set( char* data, Entity::Player& player, std::shared_ptr< 
       auto playerPos = player.getPos();
       spawned->setPos(playerPos.x, playerPos.y, playerPos.z);
       spawned->sendPositionUpdate();
+      PlayerMgr::sendDebug( player, "Spawn successful !" );
+    }
+    else
+    {
+      PlayerMgr::sendDebug( player, "Spawn failed !" );
+    }
+  }
+  else if( subCommand == "spawn-model" )
+  {
+    uint32_t nameID;
+    uint32_t modelID;
+    sscanf( params.c_str(), "%u %u", &nameID, &modelID);
+
+    auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
+    auto instance = teriMgr.getTerritoryByGuId( player.getTerritoryId() );
+
+    std::shared_ptr<Common::BNPCInstanceObject> carbuncle_instance(new Common::BNPCInstanceObject());
+    carbuncle_instance->NameId = nameID;
+    carbuncle_instance->territoryType = instance->getTerritoryTypeId();
+    carbuncle_instance->bnpcName = "bnpcCarbuncle";
+    carbuncle_instance->instanceId = instance->getGuId();
+    carbuncle_instance->nameOffset = 0;
+    carbuncle_instance->ActiveType = 1;
+    carbuncle_instance->BaseId = modelID;
+    carbuncle_instance->Level = player.getLevel();
+
+
+    //auto spawned = instance.get()->createBNpcFromLayoutIdAndTerritory(layoutID, territoryID, 1, Common::BNpcType::Enemy, player.getId());
+    //auto spawned = player.generatePlayerPetNpc(player.getAsPlayer(), instance->getNextActorId(), modelID, carbuncle_instance, *instance);
+    auto spawned = std::make_shared< Entity::PetNpc >( player.getAsPlayer(), instance->getNextActorId(), "Spawned Model", carbuncle_instance, *instance, 1, Common::BNpcType::Friendly );
+    if (spawned != nullptr)
+    {
+      spawned->setFlag(Entity::BNpcFlag::Immobile);
+      auto playerPos = player.getPos();
+      spawned->setPos(playerPos.x, playerPos.y, playerPos.z);
+      spawned->sendPositionUpdate();
+      spawnedList.push_back(spawned);
       PlayerMgr::sendDebug( player, "Spawn successful !" );
     }
     else

@@ -96,6 +96,8 @@ BNpc::BNpc( uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, co
   m_boundInstanceId = pInfo->BoundInstanceID;
   m_flags = 0;
   m_rank = pInfo->BNPCRankId;
+  m_combatStyle = CombatStyleType::AllIn;
+  originalCombatStyle = CombatStyleType::AllIn;
 
 
 
@@ -215,6 +217,8 @@ BNpc::BNpc( uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, co
 
   m_territoryTypeId = zone.getTerritoryTypeId();
   m_territoryId = zone.getGuId();
+  m_combatStyle = CombatStyleType::AllIn;
+  originalCombatStyle = CombatStyleType::AllIn;
 
   if( pInfo->WanderingRange == 0 || pInfo->BoundInstanceID != 0 )
     setFlag( Immobile );
@@ -237,6 +241,8 @@ BNpc::BNpc( uint32_t id, std::shared_ptr< Common::BNPCInstanceObject > pInfo, co
 
   m_timeOfDeath = 0;
   m_targetId = Common::INVALID_GAME_OBJECT_ID64;
+  //m_combatStyle = AI::Fsm::CombatStyleType::AllIn;
+  //m_inPlaceTarget = getPos();
 
   m_maxHp = hp;
   m_maxMp = 200;
@@ -602,6 +608,9 @@ bool BNpc::hateListHasActor( const Sapphire::Entity::CharaPtr& pChara )
 
 void BNpc::aggro( const Sapphire::Entity::CharaPtr& pChara )
 {
+  if(hasFlag(NoAggro))
+    return;
+
   auto& pRNGMgr = Common::Service< World::Manager::RNGMgr >::ref();
   auto variation = static_cast< uint32_t >( pRNGMgr.getRandGenerator< float >( 500, 1000 ).next() );
 
@@ -849,6 +858,12 @@ void BNpc::setFlag( uint32_t flag )
   m_flags |= flag;
 }
 
+void BNpc::removeFlag( uint32_t flags )
+{
+  if( hasFlag(flags))
+    m_flags ^= flags;
+}
+
 void BNpc::autoAttack( CharaPtr pTarget )
 {
   auto& teriMgr = Common::Service< World::Manager::TerritoryMgr >::ref();
@@ -1040,4 +1055,26 @@ const Common::FFXIVARR_POSITION3& BNpc::getSpawnPos() const
 void BNpc::setMSuperAgro( bool mSuperAgro )
 {
   m_superAgro = mSuperAgro;
+}
+
+const FFXIVARR_POSITION3& BNpc::getInPlaceTarget() const
+{
+  return m_inPlaceTarget;
+}
+void BNpc::setInPlaceTarget( const FFXIVARR_POSITION3& mInPlaceTarget )
+{
+  m_inPlaceTarget = mInPlaceTarget;
+}
+
+Common::CombatStyleType BNpc::getCombatStyle() const
+{
+  return m_combatStyle;
+}
+void BNpc::setCombatStyle( Common::CombatStyleType mCombatStyle )
+{
+  m_combatStyle = mCombatStyle;
+}
+void BNpc::setOriginalCombatStyle( CombatStyleType originalCombatStyle )
+{
+  BNpc::originalCombatStyle = originalCombatStyle;
 }

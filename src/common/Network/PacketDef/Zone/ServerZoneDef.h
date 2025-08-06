@@ -855,8 +855,8 @@ namespace Sapphire::Network::Packets::WorldPackets::Server
     uint64_t Crest;
     uint32_t EntityId;
     uint32_t RestPoint;
-    uint8_t Unknown8;
-    uint8_t Unknown9;
+    uint8_t CurrentLevel;
+    uint8_t Unknown9; // Crash when set
     uint8_t Unknown10;
     uint8_t ExpansionLevel;
     uint8_t Race;

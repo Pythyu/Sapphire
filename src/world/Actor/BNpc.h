@@ -2,13 +2,15 @@
 
 #include <Common.h>
 
+#include "Chara.h"
 #include "Forwards.h"
 #include "ForwardsZone.h"
-#include "Chara.h"
 #include "Npc.h"
-#include <set>
 #include <map>
 #include <queue>
+#include <set>
+
+//#include "AI/Fsm/StateCombat.h"
 
 namespace Sapphire::Entity
 {
@@ -38,6 +40,7 @@ namespace Sapphire::Entity
     InvincibleRefill = 8,
     NoDeaggro = 16,
     Untargetable = 32,
+    NoAggro = 64,
   };
 
   const std::array< uint32_t, 50 > BnpcBaseHp =
@@ -140,6 +143,7 @@ namespace Sapphire::Entity
 
     bool hasFlag( uint32_t flag ) const;
     void setFlag( uint32_t flags );
+    void removeFlag( uint32_t flags );
 
     void calculateStats() override;
 
@@ -199,7 +203,14 @@ namespace Sapphire::Entity
     bool m_roamTargetReached{ false };
     bool m_superAgro;
 
+    Common::FFXIVARR_POSITION3 m_inPlaceTarget;
+    Common::CombatStyleType m_combatStyle;
+
   public:
+    void setCombatStyle( Common::CombatStyleType mCombatStyle );
+    Common::CombatStyleType getCombatStyle() const;
+    void setInPlaceTarget( const Common::FFXIVARR_POSITION3& mInPlaceTarget );
+    const Common::FFXIVARR_POSITION3& getInPlaceTarget() const;
     void setMSuperAgro( bool mSuperAgro );
 
   private:
@@ -218,6 +229,10 @@ namespace Sapphire::Entity
 
   protected:
     std::shared_ptr< World::AI::Fsm::StateMachine > m_fsm;
+    Common::CombatStyleType originalCombatStyle;
+
+  public:
+    void setOriginalCombatStyle( Common::CombatStyleType originalCombatStyle );
   };
 
 }

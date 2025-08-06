@@ -33,6 +33,7 @@ if( UNIX )
       /usr/local/mysql/bin/
       /usr/local/bin/
       /usr/bin/
+      /opt/local/lib/mysql57/bin/
     )
   endif()
 

@@ -979,11 +979,12 @@ void Action::Action::addDefaultActorFilters()
       addActorFilter( filter );
       break;
     }
-
-//    case Common::CastType::RectangularAOE:
-//    {
-//      break;
-//    }
+    case Common::CastType::RectangularAOE:
+    {
+      auto filter = std::make_shared<World::Util::ActorFilterInRectangleRange>(m_pos, m_effectRange, m_effectWidth, m_pSource->getRot());
+      addActorFilter( filter );
+      break;
+    }
 
     default:
     {

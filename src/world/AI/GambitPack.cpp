@@ -42,8 +42,10 @@ Action::ActionPtr AI::GambitTimeLinePack::peekCurrentIndexAction()
 {
   if(m_gambits.empty())
     return nullptr;
-
-  auto currentTimeline = m_gambits[getCurrentIndex()];
+  auto curIndex = getCurrentIndex();
+  if(curIndex >= m_gambits.size())
+    curIndex = 0;
+  auto currentTimeline = m_gambits[curIndex];
   auto pRule = currentTimeline.first;
 
   if (pRule == nullptr)

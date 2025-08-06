@@ -768,6 +768,15 @@ void Sapphire::Network::GameConnection::commandHandler( const Packets::FFXIVARR_
 
       break;
     }
+    case PacketCommand::PET_COMMAND:
+    {
+      if(auto pet = player.getPlayerPetNpc())
+      {
+
+        pet->petBehavior(static_cast<Entity::PetBaseAction>(data.Arg0));
+      }
+      break;
+    }
 
 /*    case PacketCommand::RequestLandInventory:
     {

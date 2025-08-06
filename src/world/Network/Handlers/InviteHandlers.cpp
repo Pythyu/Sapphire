@@ -149,7 +149,6 @@ void Sapphire::Network::GameConnection::inviteReplyHandler( const FFXIVARR_PACKE
         partyMgr.onJoin( player, *pPlayer );
         result = InviteUpdateType::ACCEPT_INVITE;
       }
-
       auto inviteUpPacket = makeInviteUpdatePacket( player, Common::Util::getTimeSeconds() + 30, data.AuthType, 1, result );
       server.queueForPlayer( pPlayer->getCharacterId(), inviteUpPacket );
 

@@ -31,10 +31,10 @@ using namespace Sapphire::World::Action;
 // Garuda-edi 1015
 // Eos 1008
 // Selene 1009
-class ActionSummon : public Sapphire::ScriptAPI::ActionScript
+class ActionSummon2 : public Sapphire::ScriptAPI::ActionScript
 {
 public:
-  ActionSummon() : Sapphire::ScriptAPI::ActionScript( 165 )
+  ActionSummon2() : Sapphire::ScriptAPI::ActionScript( 170 )
   {
   }
 
@@ -48,16 +48,16 @@ public:
     auto PartyMgr =  Common::Service< World::Manager::PartyMgr >::ref();
 
     player->removePlayerPet(instance);
-    auto petId = 1012;
-    auto baseActionId = 637;
-    auto petNameId = 1401;
-    std::string petName = "Emerald Carbuncle";
-    if(player->getLevel() >= 45)
+    auto petId = 1011;
+    auto baseActionId = 633;
+    auto petNameId = 1400;
+    std::string petName = "Saphire Carbuncle";
+    if(player->getLevel() >= 35)
     {
-      petId = 1015;
-      baseActionId = 792;
-      petName = "Garuda-Egi";
-      petNameId = 1404;
+      petId = 1014;
+      baseActionId = 641;
+      petName = "Titan-Egi";
+      petNameId = 1403;
     }
 
     std::shared_ptr<Common::BNPCInstanceObject> carbuncle_instance(new Common::BNPCInstanceObject());
@@ -78,12 +78,6 @@ public:
     {
       spawned->init();
       spawned->m_flags = 0;
-      if(player->getLevel() >= 45)
-      {
-        spawned->setCombatStyle( Common::CombatStyleType::KeepRangeIfPossible );
-        spawned->setOriginalCombatStyle(Common::CombatStyleType::KeepRangeIfPossible);
-      }
-
       spawned->setTriggerOwnerId( player->getId() );
       auto newGambitPack = World::AI::make_GambitTimeLinePack( -1 );
       auto baseAction = World::Action::make_Action( spawned->getAsChara(), baseActionId, 0 );
@@ -94,6 +88,7 @@ public:
       spawned->setSicGambitPack(newGambitPack);
       spawned->setSteadyGambitPack(World::AI::make_GambitTimeLinePack( -1 ));
 
+
       auto playerPos = player->getPos();
       auto pNavi = instance->getNaviProvider();
       spawned->setPos( playerPos.x, playerPos.y, playerPos.z );
@@ -103,9 +98,8 @@ public:
       pNavi->updateAgentMaxSpeed(*spawned, 4.f);
 
       //PartyMgr.onJoinPet(*player);
-      //Sapphire::Network::Util::Packet::sendPlayerSetup(*player);
       Network::Util::Packet::sendActorControl( *player, player->getId(), Sapphire::Network::ActorControl::SetPetEntityId, 0, spawned->getId(), spawned->getId(), 1);
-      Network::Util::Packet::sendActorControl( *player, player->getId(), Sapphire::Network::ActorControl::ShowPetHotbar, spawned->getId(), 2, 8, 17); // 2: follow, 8: basic attacks, 17: basic pet action
+      Network::Util::Packet::sendActorControl( *player, player->getId(), Sapphire::Network::ActorControl::ShowPetHotbar, spawned->getId(), 2, 8, 17);
     }
     else
     {
@@ -115,4 +109,4 @@ public:
   }
 };
 
-EXPOSE_SCRIPT( ActionSummon );
+EXPOSE_SCRIPT( ActionSummon2 );

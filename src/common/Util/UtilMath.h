@@ -13,6 +13,8 @@ namespace Sapphire::Common::Util
   float distance( float x, float y, float z, float x1, float y1, float z1 );
   float distance( const Common::FFXIVARR_POSITION3& pos1, const Common::FFXIVARR_POSITION3& pos2 );
 
+  bool checkLineCircleCollision( float CenterX, float CenterY, float radius, const Sapphire::Common::FFXIVARR_POSITION3& linePos1, const Sapphire::Common::FFXIVARR_POSITION3& linePos2 );
+
   float distance2DSq( float x, float y, float x1, float y1 );
 
   float distance2D( float x, float y, float x1, float y1 );

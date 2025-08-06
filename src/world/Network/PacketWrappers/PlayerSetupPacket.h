@@ -41,6 +41,12 @@ namespace Sapphire::Network::Packets::WorldPackets::Server
       m_data.Birthday = player.getBirthDay();
       m_data.StartTown = player.getStartTown();
       m_data.HomePoint = player.getHomepoint();
+      m_data.CurrentLevel = player.getLevel();
+
+      if(auto PetObj = player.getPlayerPetNpc())
+      {
+        m_data.Pet = PetObj->getId();
+      }
       //m_data.pose = player.getPose();
 
       memset( &m_data.Name[ 0 ], 0, sizeof( m_data.Name ) );
@@ -76,11 +82,13 @@ namespace Sapphire::Network::Packets::WorldPackets::Server
   //      m_data.unknown70[4] = 1; // enable df
 
       // enable all raids/guildhests/dungeons
-     /* memset( m_data.unlockedDungeons, 0xFF, sizeof( m_data.unlockedDungeons ) );
+      /*
+      memset( m_data.unlockedDungeons, 0xFF, sizeof( m_data.unlockedDungeons ) );
       memset( m_data.unlockedGuildhests, 0xFF, sizeof( m_data.unlockedGuildhests ) );
       memset( m_data.unlockedPvp, 0xFF, sizeof( m_data.unlockedPvp ) );
       memset( m_data.unlockedRaids, 0xFF, sizeof( m_data.unlockedRaids ) );
-      memset( m_data.unlockedTrials, 0xFF, sizeof( m_data.unlockedTrials ) );*/
+      memset( m_data.unlockedTrials, 0xFF, sizeof( m_data.unlockedTrials ) );
+       */
     };
   };
   template< typename... Args >

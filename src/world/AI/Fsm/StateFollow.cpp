@@ -21,7 +21,7 @@ void AI::Fsm::StateFollow::onUpdate( Sapphire::Entity::BNpc& bnpc, uint64_t tick
   auto targetPlayer = petNpc->getPlayerOwner();
 
 
-  if(Common::Util::distance( bnpc.getPos(), targetPlayer->getPos() ) + targetPlayer->getRadius() > petNpc->m_followRange )
+  if(!bnpc.hasFlag( Entity::Immobile ) && Common::Util::distance( bnpc.getPos(), targetPlayer->getPos() ) + targetPlayer->getRadius() > petNpc->m_followRange )
   {
     if( pNaviProvider )
       pNaviProvider->setMoveTarget( bnpc, targetPlayer->getPos() );

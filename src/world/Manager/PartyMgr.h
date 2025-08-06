@@ -59,13 +59,19 @@ namespace Sapphire::World::Manager
     void onMemberDisconnect( Entity::Player& disconnectingPlayer );
     void onMemberRejoin( Entity::Player& joiningPlayer );
 
+    void onJoinPet( Entity::Player& petOwner);
+
     void onJoinBuddy( Entity::Player& buddyOwner, Party& party );
     void onLeaveBuddy( Entity::Player& buddyOwner, Party& party );
     void onStartReadyCheck( Entity::Player& startingPlayer, Party& party );
     void onReplyReadyCheck( Entity::Player& replyingPlayer, Party& party );
 
+    uint64_t getTotalPartyNumber();
+
     ///////////////////////////
     PartyPtr getParty( uint64_t partyId );
+
+    static void sendPartyUpdate( Party& party );
 
   private:
     // arbitrary start range for party ids
@@ -76,7 +82,6 @@ namespace Sapphire::World::Manager
     uint64_t getNextPartyId();
     std::unordered_map< uint64_t, PartyPtr > m_partyIdMap;
 
-    static void sendPartyUpdate( Party& party );
     static void removeMember( Party& party, const Entity::PlayerPtr& pMember );
     static std::vector< Entity::PlayerPtr > getPartyMembers( Party& party );
     static Entity::PlayerPtr getPartyLeader( Party& party );
